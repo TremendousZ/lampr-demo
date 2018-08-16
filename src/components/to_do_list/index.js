@@ -3,6 +3,7 @@ import axios from 'axios';
 import Item from './item';
 import Input from './input';
 import './list.css';
+import { formatPostData } from '../../helpers';
 
 class ToDoList extends Component {
     constructor(props) {
@@ -24,13 +25,29 @@ class ToDoList extends Component {
         this.deleteItem = this.deleteItem.bind(this);
     }
 
-    componentWillMount() {
+     async componentWillMount() {
         this.getListData();
+
+        // const dataToSend = formatPostData({
+        //     message: 'Hello from the frontend',
+        //     favColor: 'GREEN',
+        //     birthday: '8/23/84'
+
+        // });
+
+        // const params = new URLSearchParams();
+
+        // params.append('message','Hello from the the frontend');
+        // params.append('favColor','GREEN');
+        // params.append('birthday','8/23/84');
+
+        
+        // console.log('Response from Axios   :',resp);
     }
 
     async getListData() {
         // Use get request to get list data
-        const response = { data: {}}; // Remove
+        const response = await axios.get('/api/todos.php?action=get_all_todos');
 
         const { message, listItems } = response.data;
 
